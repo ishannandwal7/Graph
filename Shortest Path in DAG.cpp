@@ -8,6 +8,7 @@ using namespace std;
 // User function Template for C++
 class Solution {
     private:
+    // why Topo sort ? because it helps to execute the nodes in the Order
     stack<int>st;
     void dfs(int node,vector<pair<int,int>>adj[],vector<bool>&vis){
         vis[node]=1;
