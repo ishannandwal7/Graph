@@ -1,9 +1,21 @@
 class Solution
 {
     private:
-    stack<int>stk;
     
-    void dfs(int node,vector<vector<int>>&adj,vector<bool>&vis){
+    void dfs(int node,vector<vector<int>>&adj,vector<bool>&vis,stack<int>&stk){
+        if(vis[node]){
+            return ;
+        }
+        vis[node]=1;
+        for(auto x:adj[node]){
+            if(vis[x]==false){
+                dfs(x,adj,vis,stk);
+            }
+        }
+        stk.push(node);
+        return ;
+    }
+     void dfs(int node,vector<vector<int>>&adj,vector<bool>&vis){
         if(vis[node]){
             return ;
         }
@@ -13,7 +25,6 @@ class Solution
                 dfs(x,adj,vis);
             }
         }
-        stk.push(node);
         return ;
     }
     
@@ -22,9 +33,10 @@ class Solution
     int kosaraju(int V, vector<vector<int>>& adj)
     {
         // ++V;
+        stack<int>stk;
         vector<bool>vis(V,false);
         for(int i=0;i<V;++i){
-            dfs(i,adj,vis);
+            dfs(i,adj,vis,stk);
         }
         vector<vector<int>>adjNew(V);
         for(int i=0;i<V;++i){
@@ -40,7 +52,6 @@ class Solution
             if(vis[temp]==false){
                 ++count;
                 dfs(temp,adjNew,vis);
-                // Print the SCC if required
             }
         }
         return count;
