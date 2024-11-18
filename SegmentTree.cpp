@@ -23,3 +23,20 @@ int query(int ind,int lo,int hi,int L,int R){
     int right = query(2*ind+2,mid+1,hi,L,R);
     return max(left,right);
 }
+
+void pointUpdate(int ind,int lo,int hi,int targetInd,int val){
+    if(lo==hi && lo==targetInd){
+        seg[ind]=val;
+        return ;
+    }
+    int mid=lo+hi;mid/=2;
+    if(targetInd<=mid){
+        //GO left;
+        pointUpdate(2*ind+1,lo,mid,targetInd,val);
+    }else{
+        // GO Right 
+        pointUpdate(2*ind+2,mid+1,hi,targetInd,val);
+    }
+    seg[ind]=max(seg[2*ind+1],seg[2*ind+2]);
+    return ;
+}
